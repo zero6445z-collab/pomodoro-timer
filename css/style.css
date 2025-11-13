@@ -650,43 +650,208 @@ header h1 {
 }
 
 /* ==================== 響應式設計 ==================== */
+/* ==================== 響應式設計 (平板) ==================== */
+@media (max-width: 768px) {
+    .container {
+        padding: var(--spacing-md);
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .week-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==================== 響應式設計 (手機) ==================== */
 @media (max-width: 640px) {
     body {
+        padding: var(--spacing-xs);
+    }
+
+    .container {
         padding: var(--spacing-sm);
+        max-width: 100%;
+    }
+
+    /* 標題調整 */
+    header {
+        margin-bottom: var(--spacing-md);
     }
 
     header h1 {
-        font-size: 2rem;
+        font-size: 1.75rem;
     }
 
+    header p {
+        font-size: 0.9rem;
+    }
+
+    /* 計時器區域 */
     .timer-section {
-        padding: var(--spacing-lg);
+        padding: var(--spacing-md);
+        overflow: visible;
     }
 
+    .timer-display {
+        padding: var(--spacing-md);
+    }
+
+    /* 縮小計時器圓圈 */
     .time-circle {
-        width: 250px;
-        height: 250px;
+        width: 220px;
+        height: 220px;
+    }
+
+    .progress-ring {
+        width: 220px;
+        height: 220px;
     }
 
     .time-text {
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 
+    .status-info {
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-md);
+    }
+
+    .status-text {
+        font-size: 1rem;
+    }
+
+    .pomodoro-count {
+        font-size: 1rem;
+    }
+
+    .count-number {
+        font-size: 1.25rem;
+    }
+
+    /* 模式選擇器 */
+    .mode-selector {
+        gap: var(--spacing-sm);
+        margin: var(--spacing-md) 0;
+    }
+
+    .mode-btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.9rem;
+    }
+
+    /* 時長調整按鈕 */
+    .time-adjust {
+        gap: var(--spacing-sm);
+        margin: var(--spacing-md) 0;
+    }
+
+    .time-adjust-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 1rem;
+    }
+
+    /* 控制按鈕 */
     .controls {
+        gap: var(--spacing-sm);
         flex-wrap: wrap;
     }
 
     .btn {
         flex: 1;
-        min-width: 100px;
+        min-width: 90px;
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.95rem;
+    }
+
+    /* 統計區域 */
+    .stats-section {
+        padding: var(--spacing-md);
+    }
+
+    .stats-section h2 {
+        font-size: 1.25rem;
     }
 
     .stats-grid {
         grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
     }
 
-    .mode-selector {
+    .stat-card {
+        padding: var(--spacing-sm);
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .week-summary {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    /* 設定區域 */
+    .settings-section {
+        padding: var(--spacing-md);
+    }
+
+    .settings-section h2 {
+        font-size: 1.25rem;
+    }
+
+    .setting-item {
         flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+
+    .setting-item label {
+        font-size: 0.9rem;
+    }
+
+    .setting-item input[type="number"] {
+        width: 100%;
+        font-size: 1rem;
+    }
+}
+
+/* ==================== 響應式設計 (極小手機) ==================== */
+@media (max-width: 400px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .time-circle {
+        width: 200px;
+        height: 200px;
+    }
+
+    .progress-ring {
+        width: 200px;
+        height: 200px;
+    }
+
+    .time-text {
+        font-size: 2.25rem;
+    }
+
+    .time-adjust-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        min-width: 80px;
+        font-size: 0.9rem;
     }
 }
 
