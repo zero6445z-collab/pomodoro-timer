@@ -43,11 +43,30 @@ class App {
             increase5: document.getElementById('increase5')
         };
 
-        // 進度環配置
-        this.progressCircleRadius = 135;
-        this.progressCircleCircumference = 2 * Math.PI * this.progressCircleRadius;
+        // 進度環配置（會根據屏幕尺寸動態調整）
+        this.updateProgressCircleRadius();
 
         this.init();
+    }
+
+    /**
+     * 更新進度環半徑（根據屏幕尺寸）
+     */
+    updateProgressCircleRadius() {
+        const width = window.innerWidth;
+
+        if (width <= 400) {
+            // 極小手機：160px 圓圈
+            this.progressCircleRadius = 75;
+        } else if (width <= 640) {
+            // 一般手機：180px 圓圈
+            this.progressCircleRadius = 85;
+        } else {
+            // 桌面：300px 圓圈
+            this.progressCircleRadius = 135;
+        }
+
+        this.progressCircleCircumference = 2 * Math.PI * this.progressCircleRadius;
     }
 
     /**
@@ -77,6 +96,13 @@ class App {
 
         // 設定進度環
         this.initProgressCircle();
+
+        // 監聽視窗大小變化
+        window.addEventListener('resize', () => {
+            this.updateProgressCircleRadius();
+            this.initProgressCircle();
+            this.updateDisplay(timer.timeLeft, timer.totalTime);
+        });
 
         console.log('番茄鐘應用程式已啟動');
     }
