@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>番茄鐘 - Pomodoro Timer</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <!-- 主標題 -->
+        <header>
+            <h1>🍅 番茄鐘</h1>
+            <p class="subtitle">專注工作，適時休息</p>
+        </header>
+
+        <!-- 計時器主體 -->
+        <main class="timer-section">
+            <!-- 狀態指示器 -->
+            <div class="status-indicator">
+                <span class="status-text">工作中</span>
+                <span class="pomodoro-count">🍅 × <span id="pomodoroCount">0</span></span>
+            </div>
+
+            <!-- 計時器顯示 -->
+            <div class="timer-display">
+                <div class="time-circle">
+                    <svg class="progress-ring" width="300" height="300">
+                        <circle class="progress-ring-circle-bg" cx="150" cy="150" r="135" />
+                        <circle class="progress-ring-circle" cx="150" cy="150" r="135" />
+                    </svg>
+                    <div class="time-text">
+                        <span id="minutes">25</span>:<span id="seconds">00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 時長調整按鈕 -->
+            <div class="time-adjust">
+                <button id="decrease5" class="time-adjust-btn" title="減少 5 分鐘">
+                    <span class="adjust-icon">−5</span>
+                </button>
+                <button id="decrease1" class="time-adjust-btn" title="減少 1 分鐘">
+                    <span class="adjust-icon">−1</span>
+                </button>
+                <button id="increase1" class="time-adjust-btn" title="增加 1 分鐘">
+                    <span class="adjust-icon">+1</span>
+                </button>
+                <button id="increase5" class="time-adjust-btn" title="增加 5 分鐘">
+                    <span class="adjust-icon">+5</span>
+                </button>
+            </div>
+
+            <!-- 控制按鈕 -->
+            <div class="controls">
+                <button id="startBtn" class="btn btn-primary">
+                    <span class="btn-icon">▶</span>
+                    <span class="btn-text">開始</span>
+                </button>
+                <button id="pauseBtn" class="btn btn-secondary" disabled>
+                    <span class="btn-icon">⏸</span>
+                    <span class="btn-text">暫停</span>
+                </button>
+                <button id="resetBtn" class="btn btn-tertiary">
+                    <span class="btn-icon">↻</span>
+                    <span class="btn-text">重置</span>
+                </button>
+            </div>
+
+            <!-- 模式切換 -->
+            <div class="mode-selector">
+                <button class="mode-btn active" data-mode="work">工作</button>
+                <button class="mode-btn" data-mode="shortBreak">短休息</button>
+                <button class="mode-btn" data-mode="longBreak">長休息</button>
+            </div>
+        </main>
+
+        <!-- 統計資訊 -->
+        <section class="stats-section">
+            <div class="stats-tabs">
+                <button class="stats-tab active" data-tab="today">今日</button>
+                <button class="stats-tab" data-tab="week">本週</button>
+            </div>
+
+            <div id="todayStats" class="stats-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="todayCount">0</div>
+                        <div class="stat-label">完成番茄鐘</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="todayMinutes">0</div>
+                        <div class="stat-label">工作分鐘</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="todayBreaks">0</div>
+                        <div class="stat-label">休息次數</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="weekStats" class="stats-content">
+                <div class="week-chart-container">
+                    <canvas id="weekChart"></canvas>
+                </div>
+                <div class="week-summary">
+                    <div class="summary-item">
+                        <span class="summary-label">本週總計</span>
+                        <span class="summary-value" id="weekTotal">0 個</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">每日平均</span>
+                        <span class="summary-value" id="weekAverage">0 個</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">最佳紀錄</span>
+                        <span class="summary-value" id="weekBest">0 個</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 設定面板 -->
+        <section class="settings-section">
+            <div class="settings-header">
+                <h2>設定</h2>
+                <button id="settingsToggle" class="icon-btn">⚙️</button>
+            </div>
+            <div class="settings-panel" id="settingsPanel">
+                <div class="setting-item">
+                    <label for="workDuration">工作時長（分鐘）</label>
+                    <input type="number" id="workDuration" min="1" max="60" value="25">
+                </div>
+                <div class="setting-item">
+                    <label for="shortBreakDuration">短休息時長（分鐘）</label>
+                    <input type="number" id="shortBreakDuration" min="1" max="30" value="5">
+                </div>
+                <div class="setting-item">
+                    <label for="longBreakDuration">長休息時長（分鐘）</label>
+                    <input type="number" id="longBreakDuration" min="1" max="60" value="15">
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="soundEnabled" checked>
+                        音效提醒
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="notificationEnabled" checked>
+                        桌面通知
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="autoStartBreaks">
+                        自動開始休息
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="autoStartPomodoros">
+                        自動開始工作
+                    </label>
+                </div>
+                <button id="saveSettings" class="btn btn-primary">儲存設定</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- 載入 JavaScript -->
+    <script src="js/storage.js"></script>
+    <script src="js/notification.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/stats.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
